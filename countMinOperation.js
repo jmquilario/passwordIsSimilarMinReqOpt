@@ -1,7 +1,9 @@
 const countMinOperation = (password) => {
   // ascii [a-z] 97-122
   // vowels
-  const v = ["a", "e", "i", "o", "u"].map((c) => c.charCodeAt()).sort();
+  const v = ["a", "e", "i", "o", "u"]
+    .map((c) => c.charCodeAt())
+    .sort((a, b) => a - b);
   // consonants
   const c = Array.from({ length: 123 - 97 }, (_, index) => index + 97).filter(
     (n) => !v.includes(n)
@@ -53,8 +55,8 @@ const countMinOperation = (password) => {
   console.log("pwd con", pc);
 
   // helper function to get the nearest distance of ascii
-  const getNearest = (origin, to) => {
-    return origin > to ? origin - to : to - origin;
+  const getNearest = (origin, destination) => {
+    return origin > destination ? origin - destination : destination - origin;
   };
 
   if (toManipulate === "con" && isEven && !isSimilar) {
@@ -64,9 +66,13 @@ const countMinOperation = (password) => {
       for (let j = 0; j < v.length; j++) {
         distance.push(getNearest(pc[i], v[j]));
       }
+      console.log(pc[i], distance);
       // sort and grab the lowest distance
-      map.push(distance.sort()[0]);
+      map.push(distance.sort((a, b) => a - b)[0]);
     }
+    console.log("map", map);
+
+    // sum diff. make sure it is sorted
     // answer
     console.log(
       "minimum number of operation required",
@@ -85,8 +91,10 @@ const countMinOperation = (password) => {
         distance.push(getNearest(pc[i], v[j]));
       }
       // sort and grab the lowest distance
-      map.push(distance.sort()[0]);
+      map.push(distance.sort((a, b) => a - b)[0]);
     }
+
+    // sum diff. make sure it is sorted
     // answer
     console.log(
       "minimum number of operation required",
@@ -98,4 +106,4 @@ const countMinOperation = (password) => {
   }
 };
 
-countMinOperation("bigbaaaaeeioauaaaaaaffffffangt");
+countMinOperation("password");
