@@ -1,3 +1,4 @@
+const P = ["kk", "ab", "aa", "zzii", "bigbangt", "password", "hack"];
 const countMinOperation = (password) => {
   // ascii [a-z] 97-122
   // vowels
@@ -25,10 +26,15 @@ const countMinOperation = (password) => {
 
   const isSimilar = pc.length === pv.length;
   // isSimilar && return 0
+  if (isSimilar) {
+    return "similar";
+  }
 
   const len = password.length;
   const isEven = len % 2 === 0;
-  // return -1 // odd number can never be similar
+  if (!isEven) {
+    return -1; // odd number can never be similar
+  }
 
   const diff = Math.abs(len / 2 - pv.length);
   // if manipulation is not needed
@@ -43,6 +49,7 @@ const countMinOperation = (password) => {
     .map((c) => c.charCodeAt())
     .sort();
 
+  /*
   console.log("is pwd similar?", isSimilar);
   console.log("can pwd be similar?", isEven);
   console.log(`what will make pwd similar? ${diff} ${toManipulate}`);
@@ -53,6 +60,7 @@ const countMinOperation = (password) => {
   console.log("vow in ascii", v);
   console.log("pwd vow", pv);
   console.log("pwd con", pc);
+*/
 
   // helper function to get the nearest distance of ascii
   const getNearest = (origin, destination) => {
@@ -66,16 +74,16 @@ const countMinOperation = (password) => {
       for (let j = 0; j < v.length; j++) {
         distance.push(getNearest(pc[i], v[j]));
       }
-      console.log(pc[i], distance);
+      //console.log(pc[i], distance);
       // sort and grab the lowest distance
       map.push(distance.sort((a, b) => a - b)[0]);
     }
-    console.log("map", map);
+    //console.log("map", map);
 
     // sum diff. make sure it is sorted
     // answer
     console.log(
-      "minimum number of operation required",
+      password,
       map
         .sort()
         .slice(0, diff)
@@ -85,10 +93,10 @@ const countMinOperation = (password) => {
 
   if (toManipulate === "vow" && isEven && !isSimilar) {
     const map = [];
-    for (let i = 0; i < pv.length; i++) {
+    for (let i = 0; i < pv.length || 0; i++) {
       const distance = [];
       for (let j = 0; j < c.length; j++) {
-        distance.push(getNearest(pc[i], v[j]));
+        distance.push(getNearest(pv[i], c[j]));
       }
       // sort and grab the lowest distance
       map.push(distance.sort((a, b) => a - b)[0]);
@@ -97,7 +105,7 @@ const countMinOperation = (password) => {
     // sum diff. make sure it is sorted
     // answer
     console.log(
-      "minimum number of operation required",
+      password,
       map
         .sort()
         .slice(0, diff)
@@ -106,4 +114,6 @@ const countMinOperation = (password) => {
   }
 };
 
-countMinOperation("password");
+for (const p of P) {
+  countMinOperation(p);
+}
