@@ -79,7 +79,7 @@ const countMinOperation = (password) => {
 
   if (toManipulate === "vow" && isEven && !isSimilar) {
     const map = [];
-    for (let i = 0; i < pc.length; i++) {
+    for (let i = 0; i < pv.length; i++) {
       const distance = [];
       for (let j = 0; j < c.length; j++) {
         distance.push(getNearest(pc[i], v[j]));
